@@ -5,10 +5,10 @@ import '../CSS/AdminDashboard.css'
 const UserTable = ({ users, role }) => {
   const [editUserId, setEditUserId] = useState(null);
   const [updatedUserData, setUpdatedUserData] = useState({ id: '', name: '', email: '' });
-
+  const url = process.env.REACT_APP_API_URL;
   const deleteUser = (id) => {
     axios
-      .delete(`http://localhost:5000/users/delete/${id}`, { params: { role } })
+      .delete(`${url}/users/delete/${id}`, { params: { role } })
       .then((response) => {
         console.log('User deleted successfully');
       })
@@ -22,7 +22,7 @@ const UserTable = ({ users, role }) => {
       const { name, email, password } = updatedUserData;
 
       axios
-        .put(`http://localhost:5000/users/update/${id}`, { name, email, password })
+        .put(`${url}/users/update/${id}`, { name, email, password })
         .then((response) => {
           console.log('User updated successfully');
           setEditUserId(null);
@@ -97,10 +97,10 @@ const UserTable = ({ users, role }) => {
 const NewUsers = () => {
   const [users, setUsers] = useState([]);
   const [role, setRole] = useState('student');
-
+  const url = process.env.REACT_APP_API_URL;
   const fetchUsersByRole = async (role, usersState) => {
     try {
-      const response = await axios.get(`http://localhost:5000/users/getAll/${role}`);
+      const response = await axios.get(`${url}/users/getAll/${role}`);
       const users = response.data.data;
       console.log(response.data.data)
       usersState(users);

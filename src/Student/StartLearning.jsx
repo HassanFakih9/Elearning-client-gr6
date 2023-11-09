@@ -19,9 +19,7 @@ function StartLearning({ userId }) {
   const url = process.env.REACT_APP_API_URL;
   
   useEffect(() => {
-    // if (userId && selectedLanguage) {
-    //   console.log(userId)
-      // Fetch enrolled levels for the selected language and user
+ 
       axios.get(`${url}/enroll/get/languagebystudent/${localStorage.getItem('userId')};`)
     .then((response) => {
       console.log(response.data.data)
@@ -46,21 +44,6 @@ const handleLanguageChange = (event) => {
     setSelectedLevelName(selectedOption.text);
   };
 
-  // // Fetch enrolled levels when userId changes
-  // useEffect(() => {
-  //   if (userId && selectedLanguage) {
-  //     // Fetch enrolled levels for the selected language
-  //     axios
-  //       .get(`${url}/enroll/get/enrolledLevels`)
-  //       .then((response) => {
-  //         setEnrolledLevels(response.data);
-  //         console.log(response.data);
-  //       })
-  //       .catch((error) => {
-  //         console.error('Error fetching enrolled levels:', error);
-  //       });
-  //   }
-  // }, [userId, selectedLanguage]);
 
 
   
@@ -108,8 +91,9 @@ const handleLanguageChange = (event) => {
   const handleSubmitAssessment = () => {
 
   
-    const userId = localStorage.getItem('userId')
-    if (assessmentId && userId && assessmentInput) {
+    const userId = localStorage.getItem('userId');
+   console.log(userId,assessmentId,assessmentInput);
+    if (assessmentId && userId ) {
       // Make an API request to create the user_assessment row and set submission to 'Submitted'
       axios
         .post(`${url}/userAssessment/post/submitUserAssessment`, {
@@ -130,7 +114,7 @@ const handleLanguageChange = (event) => {
     }
     document.querySelector('button[type="submit"]').disabled = true;
   };
-  console.log(assessmentInput)
+
   
   const closeModal = () => {
     setIsModalOpen(false);
@@ -150,21 +134,7 @@ const handleLanguageChange = (event) => {
   };
 
   const selectedLesson = lessons[lessonIndex];
-  // const handleJoinLesson = (lessonId) => {
-  //   const userId = localStorage.getItem('userId')
-  //   axios
-  //     .post('${url}/attendance/markattendance', {
-  //       lessonId: lessonId,
-  //       userId: userId, 
-  //     })
-  //     .then((response) => {
-        
-  //       console.log('Attendance marked:', response.data.message);
-  //     })
-  //     .catch((error) => {
-  //       console.error('Error marking attendance:', error);
-  //     });
-  // };
+
   const handleJoinLesson = (lessonId) => {
     // Check if the student has already joined the lesson
     if (joinedLessons.includes(lessonId)) {

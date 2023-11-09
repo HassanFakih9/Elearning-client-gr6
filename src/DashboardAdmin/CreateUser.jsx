@@ -7,7 +7,7 @@ const CreateUser = () => {
     const [signupEmail, setSignupEmail] = useState('');
     const [signupPassword, setSignupPassword] = useState('');
     const [signupRole, setSignupRole] = useState('');
-
+    const url = process.env.REACT_APP_API_URL;
     const handleSignup = () => {
         if (!signupEmail || !signupPassword || !confirmPassword || !name || !signupRole) {
             setMessage('Please fill in all fields!');
@@ -19,7 +19,7 @@ const CreateUser = () => {
             return;
         }
 
-        fetch('http://localhost:5000/users/signup', {
+        fetch(`${url}/users/signup`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
